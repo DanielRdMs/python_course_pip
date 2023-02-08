@@ -1,20 +1,36 @@
 import utilities
 import read_csv
 import charts
+import pandas as pd
 
 
 def run():
-    dataset = read_csv.read_csv('data.csv')
-    country = input('Type country: ')
-
-    answer = utilities.population_by_country(dataset, country)
-
+    '''
     if len(answer) > 0:
         country = answer[0]
         labels, values = utilities.get_population(country)
         charts.generate_bar_chart(country['Country/Territory'], labels, values)
+'''
 
+dataf = pd.read_csv('data.csv')
+dataf = dataf[dataf['Continent'] == 'Europe']
 
+countries = dataf['Country/Territory'].values
+percentages = dataf['World Population Percentage'].values
+charts.generate_pie_chart(countries, percentages)
+
+dataset = read_csv.read_csv('data.csv')
+country = input('Type country: ')
+print(country)
+
+answer = utilities.population_by_country(dataset, country)
+
+if len(answer) > 0:
+        country = answer[0]
+        labels, values = utilities.get_population(country)
+        
+        
+        
 if __name__ == '__main__':
     run()
 
